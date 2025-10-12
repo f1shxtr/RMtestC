@@ -92,18 +92,16 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   init();
-  extern uint8_t accel_rx_data[7];
-  extern uint8_t gyro_rx_data[7];
+  extern uint8_t accel_rx_data[6];
+  extern uint8_t gyro_rx_data[6];
   extern uint8_t accel_tx_data;
   extern uint8_t gyro_tx_data;
-  extern uint8_t reg;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
    HAL_Delay(1);
    loop();
     /* USER CODE END WHILE */

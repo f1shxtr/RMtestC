@@ -22,7 +22,9 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
@@ -62,13 +64,17 @@ void loop();
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define CS1_GYRO_Pin GPIO_PIN_4
-#define CS1_GYRO_GPIO_Port GPIOA
-#define CS1_ACCEL_Pin GPIO_PIN_0
-#define CS1_ACCEL_GPIO_Port GPIOB
+#define CS1_ACCEL_Pin GPIO_PIN_4
+#define CS1_ACCEL_GPIO_Port GPIOA
+#define CS1_GYRO_Pin GPIO_PIN_0
+#define CS1_GYRO_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __MAIN_H */

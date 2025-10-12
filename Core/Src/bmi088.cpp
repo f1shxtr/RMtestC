@@ -6,12 +6,10 @@
 
 void bmi088::bmi088_write_byte(uint8_t tx_data) {
         HAL_SPI_Transmit(&hspi1, &tx_data, 1, 1000);
-        while (HAL_SPI_GetState(&hspi1) == HAL_SPI_STATE_BUSY_TX);
 }
 
 void bmi088::bmi088_read_byte(uint8_t *rx_data, uint8_t length) {
         HAL_SPI_Receive(&hspi1, rx_data, length, 1000);
-        while (HAL_SPI_GetState(&hspi1) == HAL_SPI_STATE_BUSY_RX);
 }
 
 void bmi088::bmi088_write_reg(uint8_t reg, uint8_t data) {
@@ -54,9 +52,9 @@ void bmi088::bmi088_accel_read_reg(uint8_t reg, uint8_t *rx_data, uint8_t length
 
         bmi088_write_byte(reg | 0x80);
 
-        // uint8_t dummy = 0x00;
-        // bmi088_read_byte(&dummy, 1);
-        bmi088_read_byte(rx_data, length+1);
+        uint8_t dummy = 0x00;
+        bmi088_read_byte(&dummy, 1);
+        bmi088_read_byte(rx_data, length);
 
         BMI088_ACCEL_NS_H();       // 取消片选
 }// 加速度计读取，注意需要忽略第一位数据dummy byte
@@ -105,11 +103,10 @@ void init(){
         bmi.bmi088_init();
 }
 
-uint8_t accel_rx_data[7];
+uint8_t accel_rx_data[6];
 uint8_t gyro_rx_data[6];
 uint8_t accel_tx_data;
 uint8_t gyro_tx_data;
-uint8_t reg;
 void loop() {
         bmi.bmi088_accel_read_reg(0x12,accel_rx_data, 6);
         bmi.bmi088_gyro_read_reg(0x02,gyro_rx_data, 6);
