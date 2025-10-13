@@ -98,6 +98,46 @@ void bmi088::bmi088_init() {
         BMI088_ACCEL_NS_H();
 }
 
+
+void bmi088::acc_calculate(){
+        // 1. 设置/读取acc0x41寄存器中的量程range参数，并换算为量程系数
+        bmi088_accel_read_reg(0x41, &raw_range, 1);
+        // code here
+
+        // 2. 读取acc0x12寄存器中的6位acc数据
+        bmi088_accel_read_reg(0x12, rx_acc_data, 6);
+
+        // 3. 用量程系数将原始数据转换为常用单位
+        int16_t Accel_X_int16 = rx_acc_data[0] * 256 + rx_acc_data[1];
+        int16_t Accel_Y_int16 = rx_acc_data[2] * 256 + rx_acc_data[3];
+        int16_t Accel_Z_int16 = rx_acc_data[4] * 256 + rx_acc_data[5];
+
+        Accel_X_in_mg = (float)Accel_X_int16 / 32768.0f * 1000.0f * (1 << (raw_range + 1)) * 1.5f;
+        Accel_Y_in_mg = (float)Accel_Y_int16 / 32768.0f * 1000.0f * (1 << (raw_range + 1)) * 1.5f;
+        Accel_Z_in_mg = (float)Accel_Z_int16 / 32768.0f * 1000.0f * (1 << (raw_range + 1)) * 1.5f;
+        // code here
+}
+
+void bmi088::gyro_calculate(){
+        // 1. 设置/读取gyro0x0F寄存器中的量程range参数，并换算为量程系数
+        bmi088_gyro_read_reg(0x0F, &gyro_range, 1);
+        // 2. 读取gyro0x02寄存器中的6位gyro数据
+        bmi088_gyro_read_reg(0x02, rx_gyro_data,6);
+        // 3. 用量程系数将原始数据转换为常用单位
+        int16_t Rate_X = rx_gyro_data[0] * 256 + rx_gyro_data[1];
+        int16_t Rate_Y = rx_gyro_data[2] * 256 + rx_gyro_data[3];
+        int16_t Rate_Z = rx_gyro_data[4] * 256 + rx_gyro_data[5];
+
+        float full_scale_dps = 2000.0f / (1 << gyro_range);
+        float gyro_scale = full_scale_dps / 32768.0f;
+
+        // 换算 °/s
+        Gyro_X_dps = Rate_X * gyro_scale;
+        Gyro_Y_dps = Rate_Y * gyro_scale;
+        Gyro_Z_dps = Rate_Z * gyro_scale;
+}
+
+
 bmi088 bmi;
 void init(){
         bmi.bmi088_init();
@@ -108,6 +148,6 @@ uint8_t gyro_rx_data[6];
 uint8_t accel_tx_data;
 uint8_t gyro_tx_data;
 void loop() {
-        bmi.bmi088_accel_read_reg(0x12,accel_rx_data, 6);
-        bmi.bmi088_gyro_read_reg(0x02,gyro_rx_data, 6);
+        bmi.acc_calculate();
+        bmi.gyro_calculate();
 }

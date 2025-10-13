@@ -9,7 +9,19 @@
 extern "C" {
 #endif
 class bmi088{
+private:
+    uint8_t raw_range;
+    uint8_t gyro_range;
+    uint8_t rx_acc_data[6];
+    uint8_t rx_gyro_data[6];
+    float Accel_X_in_mg;
+    float Accel_Y_in_mg;
+    float Accel_Z_in_mg;
+    float Gyro_X_dps;
+    float Gyro_Y_dps;
+    float Gyro_Z_dps;
 public:
+
     void bmi088_write_byte(uint8_t tx_data);
 
     void bmi088_read_byte(uint8_t *rx_data, uint8_t length);
@@ -32,6 +44,9 @@ public:
     void bmi088_gyro_read_reg(uint8_t reg, uint8_t *rx_data, uint8_t length); // 陀螺仪读取
     void bmi088_gyro_write_single_reg(uint8_t reg, uint8_t tx_data); // gyro写入
     void bmi088_init();
+
+    void acc_calculate();
+    void gyro_calculate();
 };
 
 #ifdef  __cplusplus

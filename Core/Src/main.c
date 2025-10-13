@@ -92,10 +92,7 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   init();
-  extern uint8_t accel_rx_data[6];
-  extern uint8_t gyro_rx_data[6];
-  extern uint8_t accel_tx_data;
-  extern uint8_t gyro_tx_data;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
