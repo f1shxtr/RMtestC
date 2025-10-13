@@ -102,6 +102,7 @@ void bmi088::bmi088_init() {
 void bmi088::acc_calculate(){
         // 1. 设置/读取acc0x41寄存器中的量程range参数，并换算为量程系数
         bmi088_accel_read_reg(0x41, &raw_range, 1);
+        raw_range = raw_range & 0x03;
         // code here
 
         // 2. 读取acc0x12寄存器中的6位acc数据
@@ -121,6 +122,7 @@ void bmi088::acc_calculate(){
 void bmi088::gyro_calculate(){
         // 1. 设置/读取gyro0x0F寄存器中的量程range参数，并换算为量程系数
         bmi088_gyro_read_reg(0x0F, &gyro_range, 1);
+        gyro_range = gyro_range & 0x07;
         // 2. 读取gyro0x02寄存器中的6位gyro数据
         bmi088_gyro_read_reg(0x02, rx_gyro_data,6);
         // 3. 用量程系数将原始数据转换为常用单位
