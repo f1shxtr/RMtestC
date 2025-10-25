@@ -56,18 +56,14 @@ void Error_Handler(void);
 #ifdef __cplusplus
 extern "C" {
 #endif
-void init();
-void loop();
+
+void DMA_MainLoopTask(void);
 #ifdef __cplusplus
 }
 #endif
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define CS1_ACCEL_Pin GPIO_PIN_4
-#define CS1_ACCEL_GPIO_Port GPIOA
-#define CS1_GYRO_Pin GPIO_PIN_0
-#define CS1_GYRO_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
