@@ -56,7 +56,7 @@ void Error_Handler(void);
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+void init();
 void DMA_MainLoopTask(void);
 #ifdef __cplusplus
 }

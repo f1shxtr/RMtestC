@@ -45,8 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t rx_buf[18];
-uint8_t is_connected;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,7 +92,7 @@ int main(void)
   MX_TIM6_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_StatusTypeDef status = HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rx_buf,18);
+  init();
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   /* USER CODE END 2 */
 
