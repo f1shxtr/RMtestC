@@ -33,8 +33,9 @@ enable_language(C ASM)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME}
-        Usercode/Src/user_tasks.cpp
-        Usercode/Inc/user_tasks.h
+        Core/Src/callback.cpp
+        Core/Src/rc.cpp
+        Core/Inc/rc.h
 )
 
 # Add STM32CubeMX generated sources
@@ -48,13 +49,11 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
-        Usercode/Src/user_tasks.cpp
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
-        UserCode/Inc
 )
 
 # Add project symbols (macros)
